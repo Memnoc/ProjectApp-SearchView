@@ -11,11 +11,10 @@ import com.smartdroidesign.searchview.model.Name;
 import com.smartdroidesign.searchview.presenter.Adapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Name> nameList = new ArrayList<>();
+    private ArrayList<Name> nameList = new ArrayList<>();
     private Adapter animalsAdapter;
 
     @Override

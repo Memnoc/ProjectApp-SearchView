@@ -11,7 +11,7 @@ import com.smartdroidesign.searchview.R;
 import com.smartdroidesign.searchview.model.Name;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -19,10 +19,10 @@ import android.widget.Filterable;
 public class Adapter extends RecyclerView.Adapter<ViewHolder> implements Filterable {
 
     private Context context;
-    private List<Name> nameList;
-    private List<Name> filteredNameList;
+    private ArrayList<Name> nameList;
+    private ArrayList<Name> filteredNameList;
 
-    public Adapter(Context context, List<Name> nameList) {
+    public Adapter(Context context, ArrayList<Name> nameList) {
         this.context = context;
         this.nameList = nameList;
         this.filteredNameList = new ArrayList<>(nameList);
@@ -63,7 +63,7 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> implements Filtera
                 if (charSequenceString.isEmpty()) {
                     filteredNameList = nameList;
                 } else {
-                    List<Name> filteredList = new ArrayList<>();
+                    ArrayList<Name> filteredList = new ArrayList<>();
                     for (Name name : nameList) {
                         if (name.getName().toLowerCase().contains(charSequenceString.toLowerCase().trim())) {
                             filteredList.add(name);
@@ -80,7 +80,7 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> implements Filtera
             @Override
             @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredNameList = (List<Name>) results.values;
+                filteredNameList = (ArrayList<Name>) results.values;
                 notifyDataSetChanged();
             }
         };
