@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.widget.Filter;
+import android.widget.Filterable;
 
-public class Adapter extends RecyclerView.Adapter<ViewHolder> {
+public class Adapter extends RecyclerView.Adapter<ViewHolder> implements Filterable {
 
     private Context context;
     private List<Name> nameList;
@@ -24,7 +25,7 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
     public Adapter(Context context, List<Name> nameList) {
         this.context = context;
         this.nameList = nameList;
-        this.filteredNameList = nameList;
+        this.filteredNameList = new ArrayList<>(nameList);
     }
 
     @NonNull
@@ -53,17 +54,18 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
      *
      * @return a filter used to constrain data
      */
+    @Override
     public Filter getFilter() {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                String charSequenceString = constraint.toString();
+                String charSequenceString = constraint.toString().toLowerCase();
                 if (charSequenceString.isEmpty()) {
                     filteredNameList = nameList;
                 } else {
                     List<Name> filteredList = new ArrayList<>();
                     for (Name name : nameList) {
-                        if (name.getName().toLowerCase().contains(charSequenceString.toLowerCase())) {
+                        if (name.getName().toLowerCase().contains(charSequenceString.toLowerCase().trim())) {
                             filteredList.add(name);
                         }
                         filteredNameList = filteredList;
@@ -76,6 +78,7 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 filteredNameList = (List<Name>) results.values;
                 notifyDataSetChanged();
